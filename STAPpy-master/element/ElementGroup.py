@@ -14,6 +14,8 @@
 """
 import sys
 sys.path.append('../')
+from element.Beam import CBeam
+from element.BeamMaterial import CBeamMaterial
 from element.Bar import CBar
 from element.Material import CBarMaterial
 
@@ -77,10 +79,13 @@ class CElementGroup(object):
 		element_type = ElementTypes.get(self._ElementType)
 		if element_type == 'Bar':
 			self._ElementList = [CBar() for _ in range(amount)]
+		elif element_type == 'Beam':
+			# 新增：梁单元
+			self._ElementList = [CBeam() for _ in range(amount)]
 		elif element_type == 'Q4':
 			# implementation for other element types by yourself
 			# ...
-			pass # comment or delete this line after implementation
+			pass  # comment or delete this line after implementation
 		else:
 			error_info = "\nType {} not available. See CElementGroup." \
 						 "AllocateElement.".format(self._ElementType)
@@ -96,10 +101,13 @@ class CElementGroup(object):
 		element_type = ElementTypes.get(self._ElementType)
 		if element_type == 'Bar':
 			self._MaterialList = [CBarMaterial() for _ in range(amount)]
+		elif element_type == 'Beam':
+			# 这里添加梁单元材料
+			self._MaterialList = [CBeamMaterial() for _ in range(amount)]
 		elif element_type == 'Q4':
 			# implementation for other element types by yourself
 			# ...
-			pass # comment or delete this line after implementation
+			pass  # comment or delete this line after implementation
 		else:
 			error_info = "\nType {} not available. See CElementGroup." \
 						 "AllocateMaterials.".format(self._ElementType)
