@@ -146,7 +146,7 @@ class COutputter(object):
 			self._output_file.write(pre_info)
 
 			element_type = ElementTypes.get(ElementType)
-			if element_type == 'Bar':
+			if element_type == 'Bar' or element_type == 'Truss':
 				self.PrintBarElementData(EleGrp)
 			elif element_type == 'Q4':
 				# implementation for other element types by yourself
@@ -252,7 +252,8 @@ class COutputter(object):
 			ElementType = EleGrp.GetElementType()
 
 			element_type = ElementTypes.get(ElementType)
-			if element_type == 'Bar':
+			# 👇 就是这里加了 or Truss
+			if element_type == 'Bar' or element_type == 'Truss':
 				pre_info = "  ELEMENT             FORCE            STRESS\n" \
 						   "  NUMBER\n"
 				print(pre_info, end="")
@@ -265,7 +266,7 @@ class COutputter(object):
 					Element.ElementStress(stress, displacement)
 
 					material = Element.GetElementMaterial()
-					stress_info = "%5d%22.6e%18.6e\n"%(Ele+1, stress[0]*material.Area, stress[0])
+					stress_info = "%5d%22.6e%18.6e\n" % (Ele + 1, stress[0] * material.Area, stress[0])
 					print(stress_info, end="")
 					self._output_file.write(stress_info)
 			elif element_type == 'Q4':

@@ -15,6 +15,7 @@
 import sys
 sys.path.append('../')
 from element.Bar import CBar
+from element.Truss import CTruss
 from element.Material import CBarMaterial
 
 # dictionary: Define set of element types
@@ -25,7 +26,8 @@ ElementTypes = {0:'UNDEFINED',
 				4:'H8',
 				5:'Beam',
 				6:'Plate',
-				7:'Shell'}
+				7:'Shell',
+				8:'Truss'}
 
 
 class CElementGroup(object):
@@ -77,6 +79,8 @@ class CElementGroup(object):
 		element_type = ElementTypes.get(self._ElementType)
 		if element_type == 'Bar':
 			self._ElementList = [CBar() for _ in range(amount)]
+		elif element_type == 'Truss':  # <-- 新增
+			self._ElementList = [CTruss() for _ in range(amount)]
 		elif element_type == 'Q4':
 			# implementation for other element types by yourself
 			# ...
@@ -95,6 +99,8 @@ class CElementGroup(object):
 		"""
 		element_type = ElementTypes.get(self._ElementType)
 		if element_type == 'Bar':
+			self._MaterialList = [CBarMaterial() for _ in range(amount)]
+		elif element_type == 'Truss':  # <-- 新增
 			self._MaterialList = [CBarMaterial() for _ in range(amount)]
 		elif element_type == 'Q4':
 			# implementation for other element types by yourself
